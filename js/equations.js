@@ -12,7 +12,13 @@ var solve = function(equation, equation2) {
 
 	var xSolution = b/m;
 	var ySolution = (equation[0] *xSolution) +  equation[1];
-	console.log(xSolution +" " +ySolution)
+
+	var x = new Fraction(xSolution);
+	var result = x.toFraction(true);
+	var y = new Fraction(ySolution);
+	var result2 = x.toFraction(true);
+
+	console.log(result +" " +result2)
 }
 
 solve(equation,equation2);
