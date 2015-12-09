@@ -36,9 +36,12 @@
 		<div class="row">
 			<div class="six columns">
 				<form action="" id="form">
-					Equation 1: <input type="text" name="Equation 1" maxlength="20" placeholder="" disabled><br />
-					Equation 2: <input type="text" name="Equation 2" maxlength="20" placeholder="" disabled><br />
-					Equation 3: <input type="text" name="Equation 3" maxlength="20" placeholder="" disabled><br />
+					<input type="radio" name="numEquations" value="One Equation" checked>One Equation<br />
+					<input type="radio" name="numEquations" value="Two Equations">Two Equations<br />
+					<input type="radio" name="numEquations" value="Three Equations">Three Equations<br />
+					Equation 1: <input type="text" name="equations" value="Equation 1" maxlength="20" placeholder=""><br />
+					Equation 2: <input type="text" name="equations" value="Equation 2" maxlength="20" placeholder=""><br />
+					Equation 3: <input type="text" name="equations" value="Equation 3" maxlength="20" placeholder="" disabled><br />
 					<input type="submit" name="Submit" value="Submit">
 				</form>
 			</div>
@@ -61,6 +64,7 @@
 		window.getLocalVendorFiles=function(){document.write('<link rel="stylesheet" href="css/vendor/normalize-3.0.3.min.css"><link rel="stylesheet" href="css/vendor/animate-3.4.0.min.css"><link rel="stylesheet" href="css/vendor/font-awesome-4.4.0.min.css">');document.write('<script src="js/vendor/jquery-2.1.4.min.js"><\/script><script src="js/vendor/html5shiv-3.7.3.min.js"><\/script><script src="js/vendor/html5shiv-printshiv-3.7.3.min.js"><\/script><script src="js/vendor/respond-1.4.2.min.js"><\/script><script src="js/vendor/jquery.animate-colors-1.6.0.min.js"><\/script><script src="js/vendor/lodash-3.10.1.min.js"><\/script>')};window.jQuery||window.getLocalVendorFiles();
 	</script>
 
+	<script src="js/fraction.min.js"></script>
 	<script src="js/plugins.js"></script>
 	<script src="js/main.js"></script>
 </body>

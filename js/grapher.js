@@ -1,4 +1,4 @@
-var canvas = $("#canvas")[0];
+var canvas = document.getElementById("canvas");
 if (!canvas.getContext) {
 	canvasNotSupported();
 }
