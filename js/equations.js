@@ -29,7 +29,7 @@ var twoEquations = function(equation,equation2) {
 		var x = new Fraction(xSolution);
 		var result = x.toFraction(true);
 		var y = new Fraction(ySolution);
-		var result2 = x.toFraction(true);
+		var result2 = y.toFraction(true);
 
 		console.log(result +" " +result2);
 	}
@@ -137,6 +137,15 @@ var threeEquations = function(e1, e2, e3) {
 		x = (x1[3]-(x1[1]+x1[2]))/x1[0];
 		console.log(x + " " + "x");
 
+		var showx = new Fraction(x);
+		var result = showx.toFraction(true);
+
+		var showy = new Fraction(y);
+		var result2 = showy.toFraction(true);
+
+		var showz = new Fraction(z);
+		var result3 = showz.toFraction(true);
+
 		// shows the answer in {(x,y,z)}
 		console.log("Answer: {(" + x + ", " + y +", " + z + ")}");
 
@@ -144,6 +153,7 @@ var threeEquations = function(e1, e2, e3) {
 		console.log(e1[0]*x + e1[1]*y + e1[2]*z)
 		console.log(e2[0]*x + e2[1]*y + e2[2]*z)
 		console.log(e3[0]*x + e3[1]*y + e3[2]*z)
+
 
 	}
 	solve (e1, e2, e3);
