@@ -1,6 +1,7 @@
 "use strict";
-/* global gus garry:true */
-/* eslint no-warning-comments: [1, {terms: [todo, fix, help], location: anywhere}] */
+/* global Fraction */
+/* eslint no-warning-comments: [2, { "terms": ["todo", "fix", "help"], "location": "anywhere" }] */
+
 
 /*
 // useTwo or useThree will change to true if it is selected in the form
@@ -37,7 +38,7 @@ function twoEquations (equation, equation2) {
 		console.log(result + " " + result2);
 	};
 	solve(equation, equation2);
-	useTwo = false;
+	// useTwo = false;
 }
 
 // the function for three equations
@@ -55,7 +56,7 @@ function threeEquations (e1, e2, e3) {
 				[], [], []
 			],
 			[], []
-		],
+			],
 			x,
 			y,
 			z,
@@ -154,10 +155,9 @@ function threeEquations (e1, e2, e3) {
 		console.log(e1[0] * x + e1[1] * y + e1[2] * z);
 		console.log(e2[0] * x + e2[1] * y + e2[2] * z);
 		console.log(e3[0] * x + e3[1] * y + e3[2] * z);
-
 	};
 	solve(e1, e2, e3);
-	useTwo = false;
+	// useTwo = false;
 }
 
 /*
