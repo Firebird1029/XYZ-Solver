@@ -1,22 +1,23 @@
 /* global gus garry:true */
 /* eslint no-warning-comments: [1, {terms: [todo, fix, help], location: anywhere}] */
 
+/*
 // useTwo or useThree will change to true if it is selected in the form
 var useTwo = false;
-var useThree = false;
+var useThree = true;
 
 //the equations
-
 var equation = [1, 1];
 var equation2 = [-1, 3];
 
 // x + y + z = a
-var e1 = [4, 2, -3, 6];
-var e2 = [1, -4, 1, -4];
-var e3 = [-1, 0, 2, 2];
+var e1 = [1, 2, 3, 1];
+var e2 = [-1, -1, 3, 2];
+var e3 = [-6, 1, 1, -2];
+*/
 
 // the function for two equations
-var twoEquations = function(equation,equation2) {
+function twoEquations (equation, equation2) {
 	// y = mx +b
 	var solve = function() {
 
@@ -38,7 +39,7 @@ var twoEquations = function(equation,equation2) {
 }
 
 // the function for three equations
-var threeEquations = function(e1, e2, e3) {
+function threeEquations (e1, e2, e3) {
 
 	var x, y, z;
 
@@ -138,16 +139,16 @@ var threeEquations = function(e1, e2, e3) {
 		console.log(x + " " + "x");
 
 		var showx = new Fraction(x);
-		var result = showx.toFraction(true);
+		var resultx = showx.toFraction(true);
 
 		var showy = new Fraction(y);
-		var result2 = showy.toFraction(true);
+		var resulty = showy.toFraction(true);
 
 		var showz = new Fraction(z);
-		var result3 = showz.toFraction(true);
+		var resultz = showz.toFraction(true);
 
 		// shows the answer in {(x,y,z)}
-		console.log("Answer: {(" + x + ", " + y +", " + z + ")}");
+		console.log("Answer: {(" + resultx + ", " + resulty +", " + resultz + ")}");
 
 		//double-checking
 		console.log(e1[0]*x + e1[1]*y + e1[2]*z)
@@ -160,11 +161,12 @@ var threeEquations = function(e1, e2, e3) {
 	useTwo = false;
 }
 
+/*
 // add && when the submit button is clicked
-
 if (useTwo == true) {
 	twoEquations(equation,equation2);
 }
 if (useThree == true) {
-	useThreeEquations(e1,e2,e3);
+	threeEquations(e1,e2,e3);
 }
+*/

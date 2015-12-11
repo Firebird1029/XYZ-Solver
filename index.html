@@ -36,12 +36,16 @@
 		<div class="row">
 			<div class="six columns">
 				<form action="" id="form">
-					<input type="radio" name="numEquations" value="One Equation" checked>One Equation<br />
-					<input type="radio" name="numEquations" value="Two Equations">Two Equations<br />
-					<input type="radio" name="numEquations" value="Three Equations">Three Equations<br />
+					<input type="radio" name="numEquations" value="1" checked>One Equation<br />
+					<input type="radio" name="numEquations" value="2">Two Equations<br />
+					<input type="radio" name="numEquations" value="3">Three Equations<br />
 					Equation 1: <input type="text" name="equations" value="Equation 1" maxlength="20" placeholder=""><br />
-					Equation 2: <input type="text" name="equations" value="Equation 2" maxlength="20" placeholder=""><br />
-					Equation 3: <input type="text" name="equations" value="Equation 3" maxlength="20" placeholder="" disabled><br />
+					<span id="formEquation2">
+						Equation 2: <input type="text" name="equations" value="Equation 2" maxlength="20" placeholder=""><br />
+					</span>
+					<span id="formEquation3">
+						Equation 3: <input type="text" name="equations" value="Equation 3" maxlength="20" placeholder=""><br />
+					</span>
 					<input type="submit" name="Submit" value="Submit">
 				</form>
 			</div>
@@ -66,6 +70,8 @@
 
 	<script src="js/fraction.min.js"></script>
 	<script src="js/plugins.js"></script>
+
+	<script src="js/form.js"></script>
 	<script src="js/equations.js"></script>
 	<script src="js/grapher.js"></script>
 </body>

@@ -1,3 +1,6 @@
+/* global gus garry:true */
+/* eslint no-warning-comments: [1, {terms: [todo, fix, help], location: anywhere}] */
+
 var canvas = document.getElementById("canvas");
 if (!canvas.getContext) {
 	canvasNotSupported();
