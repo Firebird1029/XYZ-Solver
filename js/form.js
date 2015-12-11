@@ -8,6 +8,10 @@ var $form = $("#form"),
 	$fEq2 = $("#formEquation2"),
 	$fEq3 = $("#formEquation3"),
 
+	$fEqIn1 = $("#formEquationInput1"),
+	$fEqIn2 = $("#formEquationInput2"),
+	$fEqIn3 = $("#formEquationInput3"),
+
 	shion;
 
 // When the user changes the amount of equations to input, then show/hide the equation inputs.
@@ -34,8 +38,9 @@ $formEquationType.each(function(index, el) {
 $("#formEquation2").addClass("invisible");
 $("#formEquation3").addClass("invisible");
 
+// When the user submits the form, do the magic.
 $form.submit(function(event) {
-	var xyz = [
-		Number()
-	];
+	regexOps($fEqIn1.val(), $fEqIn2.val(), $fEqIn3.val());
 });
+
+// Convert all inputs to standard form.
