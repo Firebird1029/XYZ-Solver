@@ -20,7 +20,7 @@ var e3 = [-6, 1, 1, -2];
 // the function for two equations
 function twoEquations (equation, equation2) {
 	// y = mx +b
-	var solve = function solve () {
+	function solve () {
 		// solve for each side
 		var solvem = equation[0] - equation2[0],
 			solveb = -1 * (equation[1] - equation2[1]),
@@ -38,14 +38,15 @@ function twoEquations (equation, equation2) {
 
 		// display the result
 		console.log(result + " " + result2);
-	};
+	}
 	solve(equation, equation2);
 	// useTwo = false;
+	return ("Answer: {(" + result ", " + result2 + ")}");
 }
 
 // the function for three equations
 function threeEquations (equation1, equation2, equation3) {
-	var solve = function solve () {
+	function solve () {
 		// array containing all the  numbers
 		var array = [
 			[
@@ -69,7 +70,7 @@ function threeEquations (equation1, equation2, equation3) {
 			resulty,
 			resultz;
 		// the first part of removing the variable
-		var firstP = function firstP () {
+		function firstP () {
 			// get rid of x
 
 			// remove the x from the first equation and push it to array[0][2]
@@ -87,9 +88,9 @@ function threeEquations (equation1, equation2, equation3) {
 			array[0][2].push(array[0][0][0] - array[0][1][0]);
 			array[0][2].push(array[0][0][1] - array[0][1][1]);
 			array[0][2].push(array[0][0][2] - array[0][1][2]);
-		};
+		}
 		// the first part of removing the variable
-		var secondP = function secondP () {
+		function secondP () {
 			// get rid of x
 
 			// remove x from another equation and push it to array[1][2]
@@ -107,7 +108,7 @@ function threeEquations (equation1, equation2, equation3) {
 			array[1][2].push(array[1][0][0] - array[1][1][0]);
 			array[1][2].push(array[1][0][1] - array[1][1][1]);
 			array[1][2].push(array[1][0][2] - array[1][1][2]);
-		};
+		}
 
 		firstP();
 		secondP();
@@ -162,9 +163,10 @@ function threeEquations (equation1, equation2, equation3) {
 		console.log(equation1[0] * solvex + equation1[1] * solvey + equation1[2] * solvez);
 		console.log(equation2[0] * solvex + equation2[1] * solvey + equation2[2] * solvez);
 		console.log(equation3[0] * solvex + equation3[1] * solvey + equation3[2] * solvez);
-	};
+	}
 	solve(equation1, equation2, equation3);
 	// useTwo = false;
+	return ("Answer: {(" + resultx + ", " + resulty + ", " + resultz + ")}");
 }
 
 /*
