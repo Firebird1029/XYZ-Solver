@@ -13,6 +13,11 @@ var $form = $("#form"),
 	$fEqIn2 = $("#formEquationInput2"),
 	$fEqIn3 = $("#formEquationInput3"),
 
+	$results = $(".results"),
+	$resX = $("#resultX"),
+	$resY = $("#resultY"),
+	$resZ = $("#resultZ"),
+
 	result,
 	i;
 
@@ -35,9 +40,19 @@ $formEquationType.each(function formEquationTypeEach () {
 	});
 });
 
+// Function to hide all the results at once. Used to clear the results when a new result is found.
+function resetAllResults () {
+	$results.each(function resetAllResultsInner () {
+		$(this).addClass("hidden");
+		$(this).empty();
+	});
+}
+
 // Automatically hide the second and third equation input fields in the beginning.
+// Also hide the results because no calculations have been done yet.
 $fEq2.addClass("hidden");
 $fEq3.addClass("hidden");
+resetAllResults();
 
 // TODO: Verify equations (simply move from regexOps function to here.)
 function verifyEquations (eq1, eq2, eq3, numOfEquations) {}
@@ -188,16 +203,35 @@ $form.submit(function formSubmittedDom () {
 		verifyEquations($fEqIn1.val(), $fEqIn2.val(), $fEqIn3.val(), 3);
 		result = regexOps($fEqIn1.val(), $fEqIn2.val(), $fEqIn3.val(), 3);
 		console.log(result);
+		result = jason();		
+		console.log(result);
+
+		resetAllResults();
+		$resX.append("X: " + result.x);
+		$resY.append("Y: " + result.y);
+		$resZ.append("Z: " + result.z);
 	} else if ($("input:radio[name=numEquations]").eq(1).is(":checked")) {
 		// Two equations.
 		verifyEquations($fEqIn1.val(), $fEqIn2.val(), 2);
 		result = regexOps($fEqIn1.val(), $fEqIn2.val(), 2);
 		console.log(result);
+		result = jason();		
+		console.log(result);
+
+		resetAllResults();
+		$resX.append("X: " + result.x);
+		$resY.append("Y: " + result.y);
 	} else {
 		// One equation.
 		verifyEquations($fEqIn1.val(), 1);
 		result = regexOps($fEqIn1.val(), 1);
 		console.log(result);
+		result = jason();		
+		console.log(result);
+
+		resetAllResults();
+		// $resX.append("X: " + result.x);
+		// $resY.append("Y: " + result.y);
 	}
 
 	return false;
