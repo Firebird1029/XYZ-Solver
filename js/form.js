@@ -13,6 +13,7 @@ var $form = $("#form"),
 	$fEqIn2 = $("#formEquationInput2"),
 	$fEqIn3 = $("#formEquationInput3"),
 
+	result,
 	i;
 
 // When the user changes the amount of equations to input, then show/hide the equation inputs.
@@ -20,23 +21,26 @@ $formEquationType.each(function formEquationTypeEach () {
 	$(this).change(function changeEquationsAmountDOM () {
 		if (Number($(this).val()) === 1) {
 			// This is when the user presses "Equation 1" radio.
-			$fEq2.addClass("invisible");
-			$fEq3.addClass("invisible");
+			$fEq2.addClass("hidden");
+			$fEq3.addClass("hidden");
 		} else if (Number($(this).val()) === 2) {
 			// This is when the user presses "Equation 2" radio.
-			$fEq2.removeClass("invisible");
-			$fEq3.addClass("invisible");
+			$fEq2.removeClass("hidden");
+			$fEq3.addClass("hidden");
 		} else if (Number($(this).val()) === 3) {
 			// This is when the user presses "Equation 3" radio.
-			$fEq2.removeClass("invisible");
-			$fEq3.removeClass("invisible");
+			$fEq2.removeClass("hidden");
+			$fEq3.removeClass("hidden");
 		}
 	});
 });
 
 // Automatically hide the second and third equation input fields in the beginning.
-$fEq2.addClass("invisible");
-$fEq3.addClass("invisible");
+$fEq2.addClass("hidden");
+$fEq3.addClass("hidden");
+
+// TODO: Verify equations (simply move from regexOps function to here.)
+function verifyEquations (eq1, eq2, eq3, numOfEquations) {}
 
 // Convert all inputs to standard form.
 function regexOps (eq1, eq2, eq3, numOfEquations) {
@@ -47,7 +51,8 @@ function regexOps (eq1, eq2, eq3, numOfEquations) {
 		validNum, // This just needs to be declared before the for in loop.
 		regexString, // This variable will change depending on what form of the equation was detected.
 		match = null, // When the regex loop runs, it will send the match to this variable.
-		matches = {}; // This is an object that will contain the final numbers used to be sent to Jason's algorithms.
+		matches = [], // This is an array that will contain the numbers returned from each match.
+		finalAns = {}; // This is the object that will be used to be sent to Jason's algorithms.
 
 	// Repeat with every equation. Length - 1 because we are accounting for the argument numOfEquations.
 	for (i = 0; i < arguments.length - 1; i++) {
@@ -56,7 +61,8 @@ function regexOps (eq1, eq2, eq3, numOfEquations) {
 		faultyEquation = 0;
 		quickFaulty = true;
 		match = null;
-		matches = {};
+		matches = [];
+		finalAns = {};
 		console.log(equation);
 
 		// In order to check if the equation is valid, first locate all the needed characters in an equation.
@@ -86,40 +92,92 @@ function regexOps (eq1, eq2, eq3, numOfEquations) {
 			}
 		}
 		faultyEquation = (quickFaulty) ? 6 : faultyEquation;
-		console.log("Equation is faulty. Here is the error ID (check on the source code to identify):" + faultyEquation);
+		if (faultyEquation < 1) {
+			console.log("No errors detected with given equation.");
+		} else {
+			console.log("Equation is faulty. Here is the error ID (check on the source code to identify):" + faultyEquation);
+		}
 
 		// Find out what linear form this input is in.
 		// TODO: Make a more complicated detection algorithm that uses three arrays.
 		if (xLoc < equalsLoc) {
 			// Standard form detected.
+			console.log("Standard form detected.");
 
 			// Regex it to return only numbers.
-			regexString = /([0-9.\/]*) ? ?x ? ?\+ ? ?([0-9.\/\-]*) ? ?y ? ?\= ? ?([0-9.\/\-]*)/;
-			var str = "5/10x + 7y = 10\n18x+ 9y= 65\n3854x +9y =45\nx+5y  =53\n1.5x + 4.3y=2.343";
-			while ((match = regexString.exec(str)) !== null) {
+			regexString = /([0-9.\/]*) ? ?x ? ?\+ ? ?([\+\-]*) ? ?([0-9.\/]*) ? ?y ? ?\= ? ?([\+\-]*) ? ?([0-9.\/]*)/g;
+
+			while ((match = regexString.exec(equation)) !== null) {
 				if (match.index === regexString.lastIndex) {
 					regexString.lastIndex++;
 				}
+				matches = [
+					match[1], // This is A in: Ax + By = C.
+					match[2], // This is either + or - in: Ax +/- By = C.
+					match[3], // This is B in: Ax + By = C.
+					match[4], // This is either + or - in: Ax + By = +/- C.
+					match[5]  // This is C in: Ax + By = C.
+				];
 			}
+
+			// Process the matches to remove unnecessary characters.
+			finalAns.a = Number(matches[0]);
+			finalAns.b = (matches[1] === "-") ? Number(matches[1] + matches[2]) : Number(matches[2]);
+			finalAns.c = (matches[3] === "-") ? Number(matches[3] + matches[4]) : Number(matches[4]);
 		} else if (plusLoc > equalsLoc && minusLoc > equalsLoc) {
 			// Y-intercept form detected.
+			console.log("Y-intercept form detected.");
 
-			// Detect the slope and y-intercept.
-			regexString = /y ? ?= ? ?([\+\-]*) ? ?([0-9.\/]*) ? ?x ? ?([\+\-]*) ? ?([0-9.\/]*)/;
+			// Find the slope and y-intercept.
+			regexString = /y ? ?= ? ?([\+\-]*) ? ?([0-9.\/]*) ? ?x ? ?([\+\-]*) ? ?([0-9.\/]*)/g;
 			while ((match = regexString.exec(equation)) !== null) {
 				if (match.index === regexString.lastIndex) {
 					regexString.lastIndex++;
 				}
 
-				matches.slope = match[1];
-				matches.b = match[2];
+				matches = [
+					match[1], // This is either + or - in: y = +/- mx + b.
+					match[2], // This is m in: y = mx + b.
+					match[3], // This is either + or - in: y = mx +/- b.
+					match[4]  // This is b in: y = mx + b.
+				];
 			}
+
+			// Process the matches to remove unnecessary characters.
+			finalAns.slope = (matches[0] === "-") ? (matches[0] + matches[1]) : matches[1];
+			finalAns.b = (matches[2] === "-") ? (matches[2] + matches[3]) : matches[3];
 
 			// Convert to standard form. TODO
 		} else if (plusLoc < equalsLoc || minusLoc < equalsLoc) {
 			// Point-slope form detected.
-			regexString = /y ? ?\+?([\+\-]*) ? ?([0-9.\/]*) ? ?= ? ?([\+\-]*) ? ?([0-9.\/]*) ? ?\( ? ?x ? ?([\+\-]*) ? ?([0-9.\/]*) ? ?\)/;
+			console.log("Point-slope form detected.");
+
+			// Find the y1, slope, and x1.
+			regexString = /y ? ?\+?([\+\-]*) ? ?([0-9.\/]*) ? ?= ? ?([\+\-]*) ? ?([0-9.\/]*) ? ?\( ? ?x ? ?([\+\-]*) ? ?([0-9.\/]*) ? ?\)/g;
+			while ((match = regexString.exec(equation)) !== null) {
+				if (match.index === regexString.lastIndex) {
+					regexString.lastIndex++;
+				}
+
+				matches = [
+					match[1], // This is either + or - in: y +/- y1 = m(x - x1).
+					match[2], // This is y1 in: y - y1 = m(x - x1).
+					match[3], // This is either + or - in: y - y1 = +/- m(x - x1).
+					match[4], // This is m in: y - y1 = m(x - x1).
+					match[5], // This is either + or - in: y - y1 = m(x +/- x1).
+					match[6]  // This is x1 in: y - y1 = m(x - x1).
+				];
+			}
+
+			// Process the matches to remove unnecessary characters.
+			finalAns.y1 = (matches[0] === "-") ? (matches[0] + matches[1]) : matches[1];
+			finalAns.slope = (matches[2] === "-") ? matches[2] + matches[3] : matches[3];
+			finalAns.x1 = (matches[4] === "-") ? (matches[4] + matches[5]) : matches[5];
+
+			// Convert to standard form. TODO
 		}
+
+		return finalAns;
 	}
 }
 
@@ -127,12 +185,19 @@ function regexOps (eq1, eq2, eq3, numOfEquations) {
 $form.submit(function formSubmittedDom () {
 	if ($("input:radio[name=numEquations]").eq(2).is(":checked")) {
 		// Three equations.
-		regexOps($fEqIn1.val(), $fEqIn2.val(), $fEqIn3.val(), 3);
+		verifyEquations($fEqIn1.val(), $fEqIn2.val(), $fEqIn3.val(), 3);
+		result = regexOps($fEqIn1.val(), $fEqIn2.val(), $fEqIn3.val(), 3);
+		console.log(result);
 	} else if ($("input:radio[name=numEquations]").eq(1).is(":checked")) {
 		// Two equations.
-		regexOps($fEqIn1.val(), $fEqIn2.val(), 2);
+		verifyEquations($fEqIn1.val(), $fEqIn2.val(), 2);
+		result = regexOps($fEqIn1.val(), $fEqIn2.val(), 2);
+		console.log(result);
 	} else {
 		// One equation.
+		verifyEquations($fEqIn1.val(), 1);
+		result = regexOps($fEqIn1.val(), 1);
+		console.log(result);
 	}
 
 	return false;
