@@ -215,7 +215,7 @@ $form.submit(function formSubmittedDom () {
 		verifyEquations($fEqIn1.val(), $fEqIn2.val(), 2);
 		result = regexOps($fEqIn1.val(), $fEqIn2.val(), 2);
 		console.log(result);
-		result = jason();		
+		result = twoEquations([result.a, result.b, result.c]);
 		console.log(result);
 
 		resetAllResults();
