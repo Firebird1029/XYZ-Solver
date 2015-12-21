@@ -17,7 +17,7 @@ var e2 = [-1, -1, 3, 2];
 var e3 = [-6, 1, 1, -2];
 */
 
-function toStandard (eq1, eq2) {
+/*function toStandard (eq1, eq2) {
 	// in y = mx + b form --> ax + b = c (where a,b,c are all integers and a ≠ negative number)
 
 	var output = [],
@@ -74,7 +74,15 @@ function toStandard (eq1, eq2) {
 	console.log(output)
 	return output;
 }
-toStandard(0.2321, 3);
+toStandard(0.2321, 3);*/
+
+// converts standard to y = mx + b
+function toYintercept (xval, yval, bval) {
+	var yIntercept = [];
+	yIntercept.push(-(xval / yval));
+	yIntercept.push(bval/yval);
+	return yIntercept;
+}
 
 // the function for two equations
 function twoEquations (equation, equation2) {
